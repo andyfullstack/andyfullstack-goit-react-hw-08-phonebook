@@ -1,28 +1,59 @@
-import ContactsForm from 'components/ContactsForm/ContactsForm';
-import ContactsList from 'components/ContactsList/ContactsList';
-import Filter from 'components/Filter/Filter';
-import { useEffect } from 'react';
+import { getCurrentUser } from 'store/operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'store/operations';
-import { selectError, selectIsLoading } from 'store/selectors';
+import { Suspense, useEffect } from 'react';
+import { fetchContacts } from 'store/contOperations.js';
+import { Route, Routes } from 'react-router-dom';
+import { selectIsLoading } from 'store/root/selectors.js';
+import { selectUser } from 'store/selectors.js';
+import Loader from './Loader/Loader';
+
+import Header from './pages/Header/Header';
+import Home from './pages/Home/Home';
+import Contacts from './pages/Contacts/Contacts';
+import Register from './pages/Reg/Register';
+import Login from './pages/Login/Login';
+import Error from './pages/Error/Error';
+import PrivateRoute from 'route/PrivatRoute';
+import PublicRoute from 'route/PublicRoute';
 
 export const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    !user && dispatch(getCurrentUser());
+    user && dispatch(fetchContacts());
+  }, [dispatch, user]);
 
-  return (
-    <>
-      <h1 style={{ margin: '30px auto', maxWidth: '300px' }}>Phonebook</h1>
-      <ContactsForm />
-      <h2 style={{ margin: '30px auto', maxWidth: '300px' }}>Contacts</h2>
-      <Filter />
-      {isLoading && !error && <p>Loading...</p>}
-      <ContactsList />
-    </>
+  return isLoading ? (
+    <p>boot page</p>
+  ) : (
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<Header />}>
+          <Route index element={<Home />} />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<Contacts />} />
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <PublicRoute redirectTo="/contacts" component={<Register />} />
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute redirectTo="/contacts" component={<Login />} />
+            }
+          />
+        </Route>
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </Suspense>
   );
 };

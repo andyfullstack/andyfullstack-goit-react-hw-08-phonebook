@@ -1,40 +1,65 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { api } from './api';
 
-axios.defaults.baseURL = 'https://65a803ee94c2c5762da82303.mockapi.io/';
+export const updateApiHeaders = () => {
+  api.defaults.headers.common.Authorization = null;
+};
 
-export const fetchContacts = createAsyncThunk(
-  'contacts/fetchAll',
-  async (_, thunkAPI) => {
+export const registerUser = createAsyncThunk(
+  'auth/register',
+  async (body, thunkAPI) => {
     try {
-      const resp = await axios.get('/contacts');
+      const resp = await api.post('/users/signup', body);
       return resp.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-export const addContact = createAsyncThunk(
-  'contacts/addContact',
-  async ({ name, number }, thunkAPI) => {
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (body, thunkAPI) => {
     try {
-      const resp = await axios.post('/contacts', { name, number });
+      const resp = await api.post('/users/login', body);
       return resp.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-export const deleteContact = createAsyncThunk(
-  'contacts/deleteContact',
-  async (id, thunkAPI) => {
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue, getState }) => {
     try {
-      const resp = await axios.delete(`/contacts/${id}`);
+      await api.post('/users/logout', null, {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
+      updateApiHeaders();
+    } catch (e) {
+      rejectWithValue(e.message);
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  'auth/currentUser',
+  async (_, { rejectWithValue, getState }) => {
+    if (getState().auth.token === null) {
+      return rejectWithValue('Unable to fetch user');
+    }
+    try {
+      const resp = await api.get('/users/current', {
+        headers: {
+          Authorization: `Bearer ${getState().auth.token}`,
+        },
+      });
       return resp.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      rejectWithValue(e.message);
     }
   }
 );
