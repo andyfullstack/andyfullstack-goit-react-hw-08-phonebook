@@ -18,6 +18,7 @@ export const Li = styled.li`
   align-items: center;
   justify-content: space-evenly;
   border: 1px solid teal;
+  border-radius: 10px;
   margin-bottom: 10px;
   font-weight: 700;
 `;
