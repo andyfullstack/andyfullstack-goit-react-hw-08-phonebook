@@ -30,28 +30,35 @@ const UserMenu = () => {
   return (
     user && (
       <Box>
-        <Grid container spacing={2}>
+        <Grid container spacing={3}>
           <Grid
             item
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
+              marginLeft: 10,
             }}
           >
-            <Typography component="p" align="center" display="flex">
+            <Typography display="flex" align="center" justifyContent="center">
               <HomeIcon
                 color="success"
                 sx={{
                   color: yellow[400],
                   align: 'center',
+                  justifyContent: 'center',
+                  margin: 'auto',
+                  paddingRight: '5px',
                 }}
               ></HomeIcon>
               <Grid
                 item
                 sx={{
-                  color: 'grey',
+                  color: '#c9284e',
                   fontSize: '20px',
+                  fontWeight: '500',
                   borderRadius: 3,
+                  margin: ' auto',
                 }}
               >
                 Hello, {user.name} !

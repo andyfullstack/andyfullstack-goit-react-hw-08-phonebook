@@ -16,10 +16,12 @@ const Navi = () => {
           '& .MuiListItem-root': {
             color: '#5a5454',
             fontSize: '20px',
+            fontWeight: '500',
             borderRadius: 3,
           },
           '& .MuiListItem-root:hover': {
             backgroundColor: '#ccc0c0',
+            transition: 'margin-left 2s, ease-in-out 1s',
           },
         }}
       >
