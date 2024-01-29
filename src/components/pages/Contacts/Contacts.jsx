@@ -5,7 +5,7 @@ import ContactsForm from 'components/ContactsForm/ContactsForm';
 import Typography from '@mui/material/Typography';
 import ContactsList from 'components/ContactsList/ContactsList';
 import { selectError, selectIsLoading } from 'store/root/selectors';
-import { Filter } from '@mui/icons-material';
+import Filter from 'components/Filter/Filter';
 
 const Contacts = () => {
   const isLoading = useSelector(selectIsLoading);
@@ -13,17 +13,25 @@ const Contacts = () => {
   return (
     <Box
       sx={{
-        marginTop: 4,
+        margin: '60px 30px',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
       }}
     >
-      <Typography component="h2" variant="h4">
+      <Typography component="h2" variant="h5" mr={23} mb={2} color={'teal'}>
         Phonebook
       </Typography>
       <ContactsForm />
-      <Typography component="h2" variant="h4">
+      <Typography
+        component="h2"
+        variant="h5"
+        mr={26}
+        mb={2}
+        mt={3}
+        color={'teal'}
+      >
         Contacts
       </Typography>
       <Filter />
