@@ -17,7 +17,7 @@ const Access = () => {
           },
           '& .MuiListItem-root:hover': {
             backgroundColor: '#ccc0c0',
-            transition: '2s, ease-in-out 1s',
+            transition: ' 1s , ease-in-out 1s',
           },
         }}
       >
