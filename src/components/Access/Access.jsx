@@ -10,12 +10,12 @@ const Access = () => {
         sx={{
           display: 'flex',
           '& .MuiListItem-root': {
-            color: 'grey',
+            color: '#5a5454',
             fontSize: '20px',
             borderRadius: 3,
           },
           '& .MuiListItem-root:hover': {
-            backgroundColor: '#2c2e2f',
+            backgroundColor: '#ccc0c0',
             // transition: 'margin-left 4s ease-in-out 1s',
           },
         }}
