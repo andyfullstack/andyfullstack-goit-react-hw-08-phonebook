@@ -54,7 +54,7 @@ const UserMenu = () => {
               <Grid
                 item
                 sx={{
-                  color: '#c9284e',
+                  color: '#229313',
                   fontSize: '20px',
                   fontWeight: '500',
                   borderRadius: 3,
