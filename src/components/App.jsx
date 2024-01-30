@@ -12,7 +12,6 @@ import PrivateRoute from 'route/PrivatRoute';
 import PublicRoute from 'route/PublicRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from 'store/operations';
-
 import { useEffect } from 'react';
 import { fetchContacts } from 'store/contOperations.js';
 import { selectUser } from 'store/selectors.js';
