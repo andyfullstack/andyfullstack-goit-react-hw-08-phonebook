@@ -10,7 +10,6 @@ import Filter from 'components/Filter/Filter';
 const Contacts = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  // console.log(isLoading);
 
   return (
     <Box
